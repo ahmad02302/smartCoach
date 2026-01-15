@@ -1,13 +1,83 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <!-- Avatar + Change Photo button -->
+  <div class="avatar-container ion-text-center ion-margin-bottom">
+    <ion-avatar style="width: 140px; height: 140px; margin: auto; display: block; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <img 
+        [src]="previewImage || profile.image " 
+      />
+    </ion-avatar>
+
+    <ion-button 
+      expand="block" 
+      fill="clear" 
+      color="primary" 
+      (click)="changePhoto()"
+      class="ion-margin-top"
+    >
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      Change Photo
+    </ion-button>
+  </div>
+
+  <!-- Form fields -->
+  <ion-item>
+    <ion-label position="floating">First Name</ion-label>
+    <ion-input [(ngModel)]="profile.firstName" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Last Name</ion-label>
+    <ion-input [(ngModel)]="profile.lastName" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Short Bio</ion-label>
+    <ion-input [(ngModel)]="profile.shortName"></ion-input>
+  </ion-item>
+
+  <!-- Interests -->
+  <h3 class="ion-margin-top">Interests</h3>
+
+  <ion-item class="ion-margin-bottom">
+    <ion-label position="floating">Add interest</ion-label>
+    <br>
+    <ion-input 
+      [(ngModel)]="interestInput" 
+      (keyup.space)="addInterest()"
+      placeholder="Type and press Space"
+    ></ion-input>
+  </ion-item>
+
+  <div class="interests-container">
+    @for (interest of profile.interests; track interest) {
+      <ion-chip 
+        color="primary" 
+        outline="true"
+        (click)="removeInterest(interest)" 
+      >
+        {{ interest }}
+      </ion-chip>
+    } @empty {
+      <p class="ion-text-center ion-text-medium">No interests added yet</p>
+    }
+  </div>
+
+  <!-- Save / Cancel buttons -->
+  <div class="ion-margin-top">
+    <ion-button expand="block" color="success" (click)="save()">
+      Save Changes
+    </ion-button>
+
+    <ion-button expand="block" color="medium" (click)="cancel()" class="ion-margin-top">
+      Cancel
+    </ion-button>
+  </div>
+
 </ion-content>

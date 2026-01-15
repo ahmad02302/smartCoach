@@ -1,13 +1,89 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editProfile()">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <ion-avatar style="margin: auto; width: 120px; height: 120px; display: block;">
+    <img [src]="profile.image" />
+  </ion-avatar>
+
+  <h2 class="ion-text-center ion-margin-top">
+    {{ profile.firstName }} {{ profile.lastName }}
+  </h2>
+
+  <p class="ion-text-center ion-text-medium">
+    {{ profile.shortName }}
+  </p>
+
+  <h3 class="ion-margin-top">Interests</h3>
+
+  <div class="interests-container">
+    @for (interest of profile.interests; track interest) {
+      <ion-chip color="primary" outline="true">
+        {{ interest }}
+      </ion-chip>
+    } @empty {
+      <p class="ion-text-center ion-text-medium">No added value</p>
+    }
+  </div>
+
+  <h3 class="ion-margin-top">Favorites:</h3>
+
+  <ion-list lines="full">
+    @if (favorites.length === 0) {
+      <ion-item lines="none">
+        <ion-label class="ion-text-center ion-text-medium">
+          No favorite exercises added yet.
+        </ion-label>
+      </ion-item>
+    } @else {
+      @for (exercise of favorites; track exercise.id) {
+        <ion-item button (click)="openExercise(exercise.id)">
+
+          <ion-label>
+            <h2>{{ getExerciseName(exercise) }}</h2>
+            <p>{{ exercise.category?.name }}</p>
+          </ion-label>
+
+          <ion-button
+            slot="end"
+            fill="clear"
+            color="danger"
+            (click)="confirmDelete(exercise.id); $event.stopPropagation()"
+          >
+            <ion-icon name="trash-outline" slot="icon-only" style="font-size: 22px"></ion-icon>
+          </ion-button>
+        </ion-item>
+      }
+    }
+  </ion-list>
+
 </ion-content>
+
+<ion-tab-bar slot="bottom">
+  <ion-tab-button 
+    tab="home" 
+    [routerLink]="['/home']" 
+    routerDirection="root"
+  >
+    <ion-icon name="home-outline"></ion-icon>
+    <ion-label>Home</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button 
+    tab="profile" 
+    [routerLink]="['/profile']" 
+    routerDirection="root"
+  >
+    <ion-icon name="person-outline"></ion-icon>
+    <ion-label>Profile</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>

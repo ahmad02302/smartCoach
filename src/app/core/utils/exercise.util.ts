@@ -5,18 +5,15 @@ export interface WgerExercise {
     language: number;
     name: string;
     description: string;
-    notes?: string[]; // Optional, as per API
-    // Add other translation fields if needed
+    notes?: string[]; 
   }>;
-  images: Array<{ image: string; is_main: boolean }>; // Simplified
-  equipment: Array<{ id: number; name: string }>;    // For material
+  images: Array<{ image: string; is_main: boolean }>; 
+  equipment: Array<{ id: number; name: string }>;   
   muscles: Array<{ id: number; name_en: string; name: string }>;
   muscles_secondary: Array<{ id: number; name_en: string; name: string }>;
-  // Add more API fields as you use them
 }
 
 /**
- * Gets a field from the English translation (language 2), with fallback to first translation.
  * @param exercise The exercise object from API
  * @param field The field to extract (e.g., 'name', 'description')
  * @param fallback Custom fallback string if not found
@@ -24,7 +21,7 @@ export interface WgerExercise {
  */
 export function getEnglishTranslationField(
   exercise: WgerExercise | null | undefined,
-  field: keyof { name: string; description: string; notes?: string[] }, // Restrict to known fields for safety
+  field: keyof { name: string; description: string; notes?: string[] }, 
   fallback: string = 'Not available'
 ): string {
   if (!exercise?.translations?.length) {
@@ -35,7 +32,7 @@ export function getEnglishTranslationField(
   const english = exercise.translations.find(t => t.language === 2);
 
   if (english && english[field]) {
-    return english[field] as string; // Type assertion since field is keyed
+    return english[field] as string; 
   }
 
   // Fallback to first translation
@@ -47,18 +44,17 @@ export function getEnglishTranslationField(
   return fallback;
 }
 
-/**
- * Bonus: Get main image URL (if you need it in details page)
- */
+
+  //Get main image URL of exercise
+ 
 export function getMainImage(exercise: WgerExercise | null | undefined): string | null {
   if (!exercise?.images?.length) return null;
   const main = exercise.images.find(img => img.is_main);
   return main?.image || exercise.images[0].image || null;
 }
 
-/**
- * Bonus: Get equipment/material as comma-separated string
- */
+// Get equipment/material as comma-separated string
+ 
 export function getEquipmentList(exercise: WgerExercise | null | undefined): string {
   if (!exercise?.equipment?.length) return 'None (bodyweight)';
   return exercise.equipment.map(eq => eq.name).join(', ');
@@ -72,7 +68,7 @@ export function getMusclesList(exercise: WgerExercise | null | undefined): strin
 
   const muscleNames = exercise.muscles
     .map(m => m.name_en?.trim() || m.name?.trim() || 'Unknown')
-    .filter(name => name !== 'Unknown'); // optional: remove any bad entries
+    .filter(name => name !== 'Unknown'); 
 
   if (muscleNames.length === 0) {
     return 'None specified';

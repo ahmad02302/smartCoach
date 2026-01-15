@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { WgerApiService } from '../../core/services/api/wger-api.service';
 import { getEnglishTranslationField, WgerExercise } from '../../core/utils/exercise.util';
 
 @Component({
-  imports: [IonicModule],
+  standalone: true,
+  imports: [IonicModule, FormsModule, CommonModule],
   templateUrl: './exercises.page.html'
 })
 export class ExercisesPage implements OnInit {
-  exercises: WgerExercise[] = []; // ← Typed for safety
-  categoryName: string = 'Loading...'; // Dynamic title
+  exercises: WgerExercise[] = [];
+  filteredExercises: WgerExercise[] = [];
+  categoryName: string = 'Loading...';
+  searchTerm: string = '';
+  showSearch: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,25 +26,46 @@ export class ExercisesPage implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    
-    // Load category (for title)
+
     this.api.getCategoryById(id).subscribe(res => {
       this.categoryName = res.name || 'Unknown Category';
     });
 
-    // Load exercises (filtering happens in utility)
     this.api.getExercisesByCategory(id).subscribe(res => {
       this.exercises = res.results || [];
+      this.filteredExercises = [...this.exercises];
     });
   }
 
-  // Call the function here (or in template)
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+    if (!this.showSearch) {
+      this.clearSearch();
+    }
+  }
+
+  filterExercises() {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
+      this.filteredExercises = [...this.exercises];
+      return;
+    }
+
+    this.filteredExercises = this.exercises.filter(ex =>
+      this.getExerciseName(ex).toLowerCase().includes(term)
+    );
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.filteredExercises = [...this.exercises];
+  }
+
   getExerciseName(ex: WgerExercise): string {
     return getEnglishTranslationField(ex, 'name', 'Unnamed Exercise');
   }
 
   openExercise(ex: WgerExercise) {
-    //const categoryId = this.route.snapshot.paramMap.get('id');
-    this.router.navigate(['/tabs/exercise', ex.id]);
+    this.router.navigate(['/exercise', ex.id]);
   }
 }

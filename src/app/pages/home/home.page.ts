@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { WgerApiService } from '../../core/services/api/wger-api.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CATEGORY_UI_MAP } from '../../core/constants/category-ui.map';
 
 @Component({
-  imports: [IonicModule],
+  imports: [IonicModule, RouterModule],
   templateUrl: './home.page.html'
 })
 export class HomePage implements OnInit {
@@ -13,7 +13,7 @@ export class HomePage implements OnInit {
 
   constructor(
     private api: WgerApiService,
-    private router: Router
+    public router: Router,
   ) {}
 
   ngOnInit() {
@@ -30,7 +30,8 @@ export class HomePage implements OnInit {
 }
 
   openCategory(cat: any) {
-    this.router.navigate(['/tabs/exercises', cat.id]);
+    console.log('Tentative de navigation vers catégorie ID:', cat.id);
+    this.router.navigate(['/exercises', cat.id]);
   }
 
   
