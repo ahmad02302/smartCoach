@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Workout Chronometer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="timer-content">
+  <div class="timer-wrapper">
+    <div class="timer-container">
+
+      <div class="timer-circle" [class.active]="isRunning">
+        <div class="timer-inner">
+          <h1 class="timer-display">{{ displayTime }}</h1>
+          <p class="timer-label">TIME ELAPSED</p>
+        </div>
+      </div>
+
+      <div class="status-text" [ngClass]="{
+        'running': isRunning,
+        'paused': isPaused,
+        'ready': !isRunning && elapsedSeconds === 0
+      }">
+        {{ statusText }}
+      </div>
+
+      <div class="controls">
+        <ion-button 
+          [disabled]="isRunning"
+          (click)="start()"
+          color="success"
+          fill="solid"
+          shape="round"
+          size="large"
+        >
+          <ion-icon name="play-circle-outline" size="large"></ion-icon>
+        </ion-button>
+
+        <ion-button 
+          [disabled]="!isRunning"
+          (click)="pause()"
+          color="warning"
+          fill="solid"
+          shape="round"
+          size="large"
+        >
+          <ion-icon name="pause-circle-outline" size="large"></ion-icon>
+        </ion-button>
+
+        <ion-button 
+          (click)="reset()"
+          color="medium"
+          fill="solid"
+          shape="round"
+          size="large"
+        >
+          <ion-icon name="stop-circle-outline" size="large"></ion-icon>
+        </ion-button>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

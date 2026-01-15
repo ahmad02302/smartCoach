@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Smart Coach</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2 class="ion-text-center ion-margin-top">Catégories</h2>
+
+  <ion-grid>
+    <ion-row>
+      @for (cat of categories; track cat.id) {
+        <ion-col size="6">
+          <ion-card 
+            button 
+            (click)="openCategory(cat.id)"
+            [color]="cat.color"
+            class="ion-activatable ripple-parent"
+          >
+            <ion-card-content class="ion-text-center">
+              <ion-icon [name]="cat.icon" size="large"></ion-icon>
+              <h3>{{ cat.name }}</h3>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+</ion-content>

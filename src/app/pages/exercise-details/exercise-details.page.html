@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="getDefaultHref()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ getName() }}</ion-title>
+      <ion-button (click)="openTimer()" fill="clear" slot="end">
+        <ion-icon name="play-outline" slot="icon-only" size="large" ></ion-icon>
+      </ion-button>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (exercise) {
+    <!-- Main exercise info card -->
+    <ion-card>
+      @if (getMainImageUrl()) {
+        <img 
+          [src]="getMainImageUrl()" 
+          alt="Exercise image"
+          class="exercise-image"
+        />
+      } @else {
+        <div class="no-image-placeholder ion-text-center ion-padding">
+          <ion-icon name="image-outline" size="large"></ion-icon>
+          <p>No image available</p>
+        </div>
+      }
+      
+      <ion-card-content [innerHTML]="getDescription()"></ion-card-content>
+    </ion-card>
+
+    <!-- Equipment + Muscles side by side -->
+    <ion-grid class="ion-no-padding ion-margin-top">
+      <ion-row>
+        <!-- Equipment Card -->
+        <ion-col size="6" size-md="6">
+          <ion-card class="h-100">
+            <ion-card-header>
+              <ion-card-title>Equipment / Material</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ getMaterials() }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <!-- Muscles Card -->
+        <ion-col size="6" size-md="6">
+          <ion-card class="h-100">
+            <ion-card-header>
+              <ion-card-title>Muscles Targeted</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ getMuscles() }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  } @else {
+    <div class="ion-text-center ion-padding-vertical">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Loading exercise details...</p>
+    </div>
+  }
+</ion-content>
