@@ -31,13 +31,8 @@ log.txt
 
 # Node
 /node_modules
-/server/node_modules
 npm-debug.log
 yarn-error.log
-
-# Environment variables
-.env
-/server/.env
 
 # IDEs and editors
 .idea/
@@ -73,3 +68,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Backend
+/server/node_modules
+/server/.env
+/server/*.log

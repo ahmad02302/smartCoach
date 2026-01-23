@@ -21,7 +21,8 @@ export class FavoritesService {
   }
 
   remove(exerciseId: number) {
-    this.favorites = this.favorites.filter(e => e.id !== exerciseId);
+    let i = this.favorites.findIndex(element => element.id == exerciseId)
+    this.favorites.splice(i,1)
   }
 
   toggle(exercise: WgerExercise) {
