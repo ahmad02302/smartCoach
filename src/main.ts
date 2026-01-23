@@ -1,9 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, HTTP_INTERCEPTORS, withInterceptors } from '@angular/common/http';
+//import { AuthInterceptor } from './app/core/interceptors/auth.interceptor';
 import { addIcons } from 'ionicons';
-import { fitness, body, accessibility, walk, barbell, heartCircleOutline, pauseCircleOutline, playCircleOutline, stopCircleOutline, playOutline, homeOutline, personOutline, createOutline, star, starOutline, trashOutline, cameraOutline, imageOutline, search } from 'ionicons/icons';
+import { fitness, body, accessibility, walk, barbell, heartCircleOutline, pauseCircleOutline, playCircleOutline, stopCircleOutline, playOutline, homeOutline, personOutline, createOutline, star, starOutline, trashOutline, cameraOutline, imageOutline, search, eyeOutline, eyeOffOutline, logOutOutline } from 'ionicons/icons';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -29,14 +30,22 @@ addIcons({
   'trash-outline': trashOutline,
   'camera-outline': cameraOutline,
   'image-outline': imageOutline,
-  'search': search
-  ,});
+  'search': search,
+  'eye-outline': eyeOutline,
+  'eye-off-outline': eyeOffOutline,
+  'log-out-outline': logOutOutline
+});
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideHttpClient(),
+    // provideHttpClient(),
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // },
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
 });
