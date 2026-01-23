@@ -84,7 +84,8 @@ export class EditProfilePage {
   }
 
   removeInterest(interest: string) {
-    this.profile.interests = this.profile.interests.filter(i => i !== interest);
+        let i = this.profile.interests.indexOf(interest);
+    this.profile.interests.splice(i, 1);
   }
 
   cancel() {
