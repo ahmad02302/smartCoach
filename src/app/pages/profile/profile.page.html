@@ -23,6 +23,21 @@
     {{ profile.shortName }}
   </p>
 
+  <p class="ion-text-center ion-text-medium" *ngIf="userEmail">
+    {{ userEmail }}
+  </p>
+
+  <ion-button 
+    expand="block" 
+    color="danger" 
+    fill="outline"
+    class="ion-margin-top"
+    (click)="logout()"
+  >
+    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+    Logout
+  </ion-button>
+
   <h3 class="ion-margin-top">Interests</h3>
 
   <div class="interests-container">
