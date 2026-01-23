@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <div class="logo-section ion-text-center ion-margin-bottom">
+      <ion-icon name="fitness" size="large" color="primary"></ion-icon>
+      <h1>Create Account</h1>
+      <p class="ion-text-medium">Join Smart Coach today!</p>
+    </div>
+
+    <form (ngSubmit)="register()">
+      <ion-item>
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input 
+          type="text" 
+          [(ngModel)]="firstName" 
+          name="firstName"
+          required
+          autocomplete="given-name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input 
+          type="text" 
+          [(ngModel)]="lastName" 
+          name="lastName"
+          required
+          autocomplete="family-name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input 
+          type="email" 
+          [(ngModel)]="email" 
+          name="email"
+          required
+          autocomplete="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'" 
+          [(ngModel)]="password" 
+          name="password"
+          required
+          autocomplete="new-password"
+        ></ion-input>
+        <ion-button 
+          slot="end" 
+          fill="clear" 
+          (click)="togglePasswordVisibility()"
+          aria-label="Toggle password visibility"
+        >
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input 
+          [type]="showConfirmPassword ? 'text' : 'password'" 
+          [(ngModel)]="confirmPassword" 
+          name="confirmPassword"
+          required
+          autocomplete="new-password"
+        ></ion-input>
+        <ion-button 
+          slot="end" 
+          fill="clear" 
+          (click)="toggleConfirmPasswordVisibility()"
+          aria-label="Toggle password visibility"
+        >
+          <ion-icon [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        color="primary"
+        class="ion-margin-top"
+      >
+        Register
+      </ion-button>
+    </form>
+
+    <div class="ion-text-center ion-margin-top">
+      <p class="ion-text-medium">
+        Already have an account? 
+        <a [routerLink]="['/login']" routerDirection="back">Login</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

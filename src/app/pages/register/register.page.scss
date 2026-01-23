@@ -1,0 +1,23 @@
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.logo-section {
+  margin-bottom: 2rem;
+  
+  ion-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    margin: 0.5rem 0;
+    font-weight: bold;
+  }
+}
+
+ion-item {
+  margin-bottom: 1rem;
+}
