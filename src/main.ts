@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient, HTTP_INTERCEPTORS, withInterceptors } from '@angular/common/http';
-//import { AuthInterceptor } from './app/core/interceptors/auth.interceptor';
+import { AuthInterceptor } from './app/core/interceptors/auth.interceptor';
 import { addIcons } from 'ionicons';
 import { fitness, body, accessibility, walk, barbell, heartCircleOutline, pauseCircleOutline, playCircleOutline, stopCircleOutline, playOutline, homeOutline, personOutline, createOutline, star, starOutline, trashOutline, cameraOutline, imageOutline, search, eyeOutline, eyeOffOutline, logOutOutline } from 'ionicons/icons';
 
@@ -40,12 +40,12 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    // provideHttpClient(),
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true
-    // },
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
 });
